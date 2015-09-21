@@ -31,7 +31,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: join(app, 'index.html')
-    })
+    }),
+    new webpack.OldWatchingPlugin() //fix for failing watch for all files - needs investigating
   ],
   devServer: {
     contentBase: tmp,
