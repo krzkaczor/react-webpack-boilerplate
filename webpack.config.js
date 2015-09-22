@@ -25,14 +25,20 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader'
             },
+
             //styles
             {
                 test: /\.less$/,
                 loader: "style!css!less?strictMath&noIeCompat"
             },
+            {
+                test: /\.scss$/,
+                loader: 'style!css!sass'
+            },
             {test: /\.css$/, loader: "style!css"},
+
             //assets
-            {test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'},
+            {test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=100000'},
         ]
     },
     plugins: [
