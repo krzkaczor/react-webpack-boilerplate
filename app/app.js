@@ -1,25 +1,23 @@
 import React from 'react'
 import Router from 'react-router'
-import {RouteHandler, Route, DefaultRoute} from 'react-router'
+import {Route} from 'react-router'
 
-require('./bower_components/bootstrap/dist/css/bootstrap.css');
+require('bootstrap');
 
 class App extends React.Component {
     render() {
         return(
             <div>
                 <h1>Hello World</h1>
-                <RouteHandler/>
+                {this.props.children}
             </div>
         );
     }
 }
 
-var routes = (
-    <Route handler={App} path="/">
+React.render((
+  <Router>
+    <Route path="/" component={App}>
     </Route>
-);
-
-Router.run(routes, function(Handler) {
-    React.render(<Handler/>, document.getElementById('app'));
-});
+  </Router>
+), document.getElementById("app"))
