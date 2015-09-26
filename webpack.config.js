@@ -14,6 +14,7 @@ module.exports = {
         path: tmp,
         filename: "[name].js"
     },
+    devtool: 'source-map',
     resolve: {
         root: [join(app, "bower_components")]
     },

@@ -21,4 +21,4 @@ React.render((
     <Route path="/" component={App}>
     </Route>
   </Router>
-), document.getElementById("app"))
+), document.getElementById("app"));
