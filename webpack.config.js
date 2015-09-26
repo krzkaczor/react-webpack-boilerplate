@@ -19,6 +19,13 @@ module.exports = {
         root: [join(app, "bower_components")]
     },
     module: {
+        preLoaders: [
+            {
+                test: /(\.js$|\.jsx$)/,
+                exclude: /(node_modules|bower_components)/,
+                loader: "eslint-loader"
+            }
+        ],
         loaders: [
             //babel
             {
@@ -60,5 +67,8 @@ module.exports = {
     devServer: {
         contentBase: tmp,
         historyApiFallback: true
-    }
+    },
+    eslint: {
+        configFile: '.eslintrc'
+    },
 };
