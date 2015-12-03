@@ -1,17 +1,15 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var BowerWebpackPlugin = require("bower-webpack-plugin");
 
 var join = require('path').join;
 
 var app = join(__dirname, 'app');
-var tmp = join(__dirname, 'tmp');
-var bowerComponents = join(app, 'bower_components');
+var build = join(__dirname, 'build');
 
 module.exports = {
     entry: join(app, "app.js"),
     output: {
-        path: tmp,
+        path: build,
         filename: "[name].js"
     },
     devtool: 'source-map',
@@ -22,7 +20,7 @@ module.exports = {
         preLoaders: [
             {
                 test: /(\.js$|\.jsx$)/,
-                exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules)/,
                 loader: "eslint-loader"
             }
         ],
@@ -30,7 +28,7 @@ module.exports = {
             //babel
             {
                 test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules)/,
                 loader: 'babel-loader'
             },
 
@@ -50,10 +48,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new BowerWebpackPlugin({
-            modulesDirectories: [bowerComponents],
-            searchResolveModulesDirectories: false
-        }),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
             $: 'jquery'
@@ -65,10 +59,10 @@ module.exports = {
         new webpack.OldWatchingPlugin() //fix for failing watch for all files - needs investigating
     ],
     devServer: {
-        contentBase: tmp,
+        contentBase: build,
         historyApiFallback: true
     },
     eslint: {
         configFile: '.eslintrc'
-    },
+    }
 };
