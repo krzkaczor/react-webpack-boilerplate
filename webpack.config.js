@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+
 
 var join = require('path').join;
 
@@ -17,19 +19,16 @@ module.exports = {
         root: [join(app, "bower_components")]
     },
     module: {
-        preLoaders: [
-            {
-                test: /(\.js$|\.jsx$)/,
-                exclude: /(node_modules)/,
-                loader: "eslint-loader"
-            }
-        ],
         loaders: [
             //babel
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules)/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                query: {
+                    presets : ['stage-0', 'es2015', 'react'],
+                    plugins : ['babel-plugin-transform-decorators-legacy']
+                }
             },
 
             //styles
@@ -42,9 +41,8 @@ module.exports = {
                 loader: 'style!css!sass'
             },
             {test: /\.css$/, loader: "style!css"},
-
             //assets
-            {test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=100000'},
+            {test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=100000'}
         ]
     },
     plugins: [
@@ -56,7 +54,8 @@ module.exports = {
             inject: true,
             template: join(app, 'index.html')
         }),
-        new webpack.OldWatchingPlugin() //fix for failing watch for all files - needs investigating
+        new webpack.OldWatchingPlugin(), //fix for failing watch for all files - needs investigating
+        new OpenBrowserPlugin({url: 'http://localhost:8080'})
     ],
     devServer: {
         contentBase: build,
